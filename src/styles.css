@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+header{
+    background: #FF9933; /* Indian Saffron */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+}
+.content{
+    background: #FFFFFF;
+}
+footer{
+    background: #138808; /* India Green */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+}
