@@ -1,20 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
-header{
-    background: #FF9933; /* Indian Saffron */
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
+.app-containter {
+    flex-direction: column;
+    flex-flow: column;
+    display: flex;
+    height: 100%;
 }
-.content{
-    background: #FFFFFF;
+
+body {
+    height: 100vh;
+    margin: 0;
 }
-footer{
-    background: #138808; /* India Green */
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
+
+header, .content, footer{ min-height: 50px; }
+
+header { background: #FF9933; /* Indian Saffron */ }
+
+.content {
+    border: 1px solid navy;
+    flex-grow: 1;
 }
+
+footer { background: #138808; /* India Green */ }
