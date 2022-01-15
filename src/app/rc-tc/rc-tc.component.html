@@ -1,0 +1,6 @@
+<svg>
+    <circle *ngFor="let dataPoint of dataPoints" [attr.cx]="dataPoint.xDist" [attr.cy]="dataPoint.yDist" r="0.1%"
+            stroke="black"></circle>
+    <line *ngFor="let dataLine of dataLines" [attr.x1]="dataLine.x1" [attr.y1]="dataLine.y1" [attr.x2]="dataLine.x2"
+          [attr.y2]="dataLine.y2"></line>
+</svg>

@@ -3,18 +3,18 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {LineChartComponent} from './line-chart/line-chart.component';
-import {ChartModule} from "primeng/chart";
+import {RcTcComponent} from './rc-tc/rc-tc.component';
+import {CommonModule} from "@angular/common";
 
 @NgModule({
     declarations: [
         AppComponent,
-        LineChartComponent
+        RcTcComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
-        ChartModule,
+        CommonModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

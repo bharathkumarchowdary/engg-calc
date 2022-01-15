@@ -13,11 +13,10 @@ body {
 
 header, .content, footer{ min-height: 50px; }
 
-header { background: #FF9933; /* Indian Saffron */ }
+/*header { background: #FF9933; !* Indian Saffron *! }*/
 
 .content {
-    border: 1px solid navy;
     flex-grow: 1;
 }
 
-footer { background: #138808; /* India Green */ }
+/*footer { background: #138808; !* India Green *! }*/
