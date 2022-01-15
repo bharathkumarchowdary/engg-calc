@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LineChartComponent} from "./line-chart/line-chart.component";
+import {RcTcComponent} from "./rc-tc/rc-tc.component";
 
 const routes: Routes = [
-    {path: '', component: LineChartComponent}
+    {path: '', component: RcTcComponent}
 ];
 
 @NgModule({
