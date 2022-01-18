@@ -32,6 +32,7 @@ export class RcTcComponent implements OnInit {
     dataXRange: number = 0;
     private dataXMin: number = 0;
     private dataYMin: number = 0;
+    private dataXLabelBase: number = 1;
 
     constructor() {
         this.dataPoints = []
@@ -100,8 +101,11 @@ export class RcTcComponent implements OnInit {
         this.dataYMin = Math.min(...this.dataY)
         this.dataYRange = Math.max(...this.dataY) - this.dataYMin
         this.dataXRange = Math.max(...this.dataX) - this.dataXMin
+        if ((1e-3 < this.dataXLabelBase) && (this.dataXRange < 1)) {
+            this.dataXLabelBase = 1e-3
+        }
         for (let index = 0; index < 11; index += 1) {
-            this.xLabels[index] = (((index * 10) / 100) * this.dataXRange)
+            this.xLabels[index] = Number(((((index * 10) / 100) * this.dataXRange) / this.dataXLabelBase).toFixed(3))
             console.log(this.xLabels[index])
         }
         for (let index = 0; index < this.dataY.length; index++) {
