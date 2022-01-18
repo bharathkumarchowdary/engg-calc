@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {FormControl} from "@angular/forms";
 
 type dataPoint = {
     yDist: string;
@@ -18,10 +19,15 @@ type dataLine = {
 })
 export class RcTcComponent implements OnInit {
 
+    voltage: FormControl = new FormControl(5)
+    resistance: FormControl = new FormControl(1e3)
+    capacitance: FormControl = new FormControl(1e-6)
+    xLabels: number[];
+
     dataPoints: dataPoint[];
     dataLines: dataLine[];
     dataY: number[];
-    dataX: number[];
+    dataX: number[] = [];
     dataYRange: number = 0;
     dataXRange: number = 0;
     private dataXMin: number = 0;
@@ -29,6 +35,7 @@ export class RcTcComponent implements OnInit {
 
     constructor() {
         this.dataPoints = []
+        this.xLabels = []
         this.dataLines = []
         this.dataY = [
             0.00E+00,
@@ -83,66 +90,20 @@ export class RcTcComponent implements OnInit {
             4.96E+00,
             4.97E+00,
         ]
-        this.dataX = [
-            0.00E+00,
-            1.00E-01,
-            2.00E-01,
-            3.00E-01,
-            4.00E-01,
-            5.00E-01,
-            6.00E-01,
-            7.00E-01,
-            8.00E-01,
-            9.00E-01,
-            1.00E+00,
-            1.10E+00,
-            1.20E+00,
-            1.30E+00,
-            1.40E+00,
-            1.50E+00,
-            1.60E+00,
-            1.70E+00,
-            1.80E+00,
-            1.90E+00,
-            2.00E+00,
-            2.10E+00,
-            2.20E+00,
-            2.30E+00,
-            2.40E+00,
-            2.50E+00,
-            2.60E+00,
-            2.70E+00,
-            2.80E+00,
-            2.90E+00,
-            3.00E+00,
-            3.10E+00,
-            3.20E+00,
-            3.30E+00,
-            3.40E+00,
-            3.50E+00,
-            3.60E+00,
-            3.70E+00,
-            3.80E+00,
-            3.90E+00,
-            4.00E+00,
-            4.10E+00,
-            4.20E+00,
-            4.30E+00,
-            4.40E+00,
-            4.50E+00,
-            4.60E+00,
-            4.70E+00,
-            4.80E+00,
-            4.90E+00,
-            5.00E+00,
-        ]
     }
 
     ngOnInit() {
+        for (let index = 0; index < 51; index++) {
+            this.dataX[index] = index * this.resistance.value * this.capacitance.value / 10
+        }
         this.dataXMin = Math.min(...this.dataX)
         this.dataYMin = Math.min(...this.dataY)
         this.dataYRange = Math.max(...this.dataY) - this.dataYMin
         this.dataXRange = Math.max(...this.dataX) - this.dataXMin
+        for (let index = 0; index < 11; index += 1) {
+            this.xLabels[index] = (((index * 10) / 100) * this.dataXRange)
+            console.log(this.xLabels[index])
+        }
         for (let index = 0; index < this.dataY.length; index++) {
             this.dataPoints[index] = {
                 yDist: (100 - ((this.dataY[index] - this.dataYMin) * 100 / this.dataYRange)).toFixed(2).concat("%"),
@@ -153,8 +114,8 @@ export class RcTcComponent implements OnInit {
             this.dataLines[index] = {
                 x1: this.dataPoints[index].xDist,
                 y1: this.dataPoints[index].yDist,
-                x2: this.dataPoints[index+1].xDist,
-                y2: this.dataPoints[index+1].yDist,
+                x2: this.dataPoints[index + 1].xDist,
+                y2: this.dataPoints[index + 1].yDist,
             }
         }
     }
