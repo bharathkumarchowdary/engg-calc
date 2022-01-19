@@ -3,16 +3,16 @@
 <input type="text" [formControl]="capacitance">
 <div class="graph">
     <svg>
-        <circle *ngFor="let dataPoint of dataPoints" [attr.cx]="dataPoint.xDist" [attr.cy]="dataPoint.yDist" r="0.1%"
+        <circle *ngFor="let dataPoint of graphData.dataPoints" [attr.cx]="dataPoint.xDist" [attr.cy]="dataPoint.yDist" r="0.1%"
                 stroke="black"></circle>
-        <line *ngFor="let dataLine of dataLines" [attr.x1]="dataLine.x1" [attr.y1]="dataLine.y1" [attr.x2]="dataLine.x2"
+        <line *ngFor="let dataLine of graphData.dataLines" [attr.x1]="dataLine.x1" [attr.y1]="dataLine.y1" [attr.x2]="dataLine.x2"
               [attr.y2]="dataLine.y2"></line>
     </svg>
     <div class="y-axis">
-        <span *ngFor="let xLabel of xLabels" class="x-axis-label">{{xLabel}}</span>
+        <span *ngFor="let yLabel of graphData.yLabels" class="x-axis-label">{{yLabel}}</span>
     </div>
 </div>
 <div class="x-axis">
-    <span *ngFor="let xLabel of xLabels" class="x-axis-label">{{xLabel}}</span>
+    <span *ngFor="let xLabel of graphData.xLabels" class="x-axis-label">{{xLabel}}</span>
 </div>
 <label>milli second</label>

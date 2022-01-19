@@ -1,15 +1,31 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from "@angular/forms";
+import {RcTcGraphService} from "./rc-tc-graph.service";
 
-type dataPoint = {
+export type DataPoint = {
     yDist: string;
     xDist: string;
 }
-type dataLine = {
+type Dataline = {
     x1: string;
     y1: string;
     x2: string;
     y2: string;
+}
+
+export interface GraphData {
+    dataX: number[],
+    dataY: number[],
+    dataXRange: number,
+    dataYRange: number,
+    dataXLabelBase: number,
+    dataYLabelBase: number,
+    xLabels: number[],
+    yLabels: number[],
+    dataXMin: number,
+    dataYMin: number,
+    dataPoints: DataPoint[],
+    dataLines: Dataline[],
 }
 
 @Component({
@@ -22,50 +38,26 @@ export class RcTcComponent implements OnInit {
     voltage: FormControl = new FormControl(5)
     resistance: FormControl = new FormControl(1e3)
     capacitance: FormControl = new FormControl(1e-6)
-    xLabels: number[] = [];
 
-    dataPoints: dataPoint[] = [];
-    dataLines: dataLine[] = [];
-    dataY: number[] = [];
-    dataX: number[] = [];
-    dataYRange: number = 0;
-    dataXRange: number = 0;
-    private dataXMin: number = 0;
-    private dataYMin: number = 0;
-    private dataXLabelBase: number = 1;
+    graphData: GraphData = {
+        dataX: [],
+        dataY: [],
+        dataYRange: 0,
+        dataXRange: 0,
+        dataXLabelBase: 1,
+        dataYLabelBase: 1,
+        xLabels: [],
+        yLabels: [],
+        dataXMin: 0,
+        dataYMin: 0,
+        dataPoints: [],
+        dataLines: [],
+    };
 
-    constructor() {
+    constructor(private rctcGraphService: RcTcGraphService) {
     }
 
     ngOnInit() {
-        for (let index = 0; index < 51; index++) {
-            this.dataX[index] = index * this.resistance.value * this.capacitance.value / 10
-            this.dataY[index] = this.voltage.value * (1 - Math.exp(-1 * this.dataX[index] / (this.resistance.value * this.capacitance.value)))
-        }
-        this.dataXMin = Math.min(...this.dataX)
-        this.dataYMin = Math.min(...this.dataY)
-        this.dataYRange = Math.max(...this.dataY) - this.dataYMin
-        this.dataXRange = Math.max(...this.dataX) - this.dataXMin
-        if ((1e-3 < this.dataXLabelBase) && (this.dataXRange < 1)) {
-            this.dataXLabelBase = 1e-3
-        }
-        for (let index = 0; index < 11; index += 1) {
-            this.xLabels[index] = Number(((((index * 10) / 100) * this.dataXRange) / this.dataXLabelBase).toFixed(3))
-            console.log(this.xLabels[index])
-        }
-        for (let index = 0; index < this.dataY.length; index++) {
-            this.dataPoints[index] = {
-                yDist: (100 - ((this.dataY[index] - this.dataYMin) * 100 / this.dataYRange)).toFixed(2).concat("%"),
-                xDist: ((this.dataX[index] - this.dataXMin) * 100 / this.dataXRange).toFixed(2).concat("%")
-            }
-        }
-        for (let index = 0; index < (this.dataY.length - 1); index++) {
-            this.dataLines[index] = {
-                x1: this.dataPoints[index].xDist,
-                y1: this.dataPoints[index].yDist,
-                x2: this.dataPoints[index + 1].xDist,
-                y2: this.dataPoints[index + 1].yDist,
-            }
-        }
+        this.rctcGraphService.getRcTcGraphData(this.voltage.value, this.resistance.value, this.capacitance.value).subscribe(data => this.graphData = data)
     }
 }

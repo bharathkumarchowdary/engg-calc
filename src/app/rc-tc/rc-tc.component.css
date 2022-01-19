@@ -19,7 +19,7 @@ svg{
 div.y-axis {
     border: 2px solid blue;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
 }
 
 div.x-axis {
