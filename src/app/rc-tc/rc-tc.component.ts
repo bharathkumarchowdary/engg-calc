@@ -13,19 +13,19 @@ type Dataline = {
     y2: string;
 }
 
-export interface GraphData {
-    dataX: number[],
-    dataY: number[],
-    dataXRange: number,
-    dataYRange: number,
-    dataXLabelBase: number,
-    dataYLabelBase: number,
-    xLabels: number[],
-    yLabels: number[],
-    dataXMin: number,
-    dataYMin: number,
-    dataPoints: DataPoint[],
-    dataLines: Dataline[],
+export class GraphData {
+    dataX: number[] = [];
+    dataY: number[] = [];
+    dataXRange: number = 0;
+    dataYRange: number = 0;
+    dataXLabelBase: number = 1;
+    dataYLabelBase: number = 1;
+    xLabels: number[] = [];
+    yLabels: number[] = [];
+    dataXMin: number = 0;
+    dataYMin: number = 0;
+    dataPoints: DataPoint[] = [];
+    dataLines: Dataline[] = [];
 }
 
 @Component({
@@ -35,24 +35,11 @@ export interface GraphData {
 })
 export class RcTcComponent implements OnInit {
 
-    voltage: FormControl = new FormControl(5)
-    resistance: FormControl = new FormControl(1e3)
-    capacitance: FormControl = new FormControl(1e-6)
+    public voltage: FormControl = new FormControl(5)
+    public resistance: FormControl = new FormControl(1e3)
+    public capacitance: FormControl = new FormControl(1e-6)
 
-    graphData: GraphData = {
-        dataX: [],
-        dataY: [],
-        dataYRange: 0,
-        dataXRange: 0,
-        dataXLabelBase: 1,
-        dataYLabelBase: 1,
-        xLabels: [],
-        yLabels: [],
-        dataXMin: 0,
-        dataYMin: 0,
-        dataPoints: [],
-        dataLines: [],
-    };
+    public graphData: GraphData = new GraphData()
 
     constructor(private rctcGraphService: RcTcGraphService) {
     }

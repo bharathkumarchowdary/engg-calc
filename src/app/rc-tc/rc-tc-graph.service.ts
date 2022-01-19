@@ -8,39 +8,13 @@ import {of} from "rxjs";
 })
 export class RcTcGraphService {
 
-    private graphData: GraphData = {
-        dataX: [],
-        dataY: [],
-        dataYRange: 0,
-        dataXRange: 0,
-        dataXLabelBase: 1,
-        dataYLabelBase: 1,
-        xLabels: [],
-        yLabels: [],
-        dataXMin: 0,
-        dataYMin: 0,
-        dataPoints: [],
-        dataLines: [],
-    };
+    private graphData: GraphData = new GraphData()
 
     constructor() {
     }
 
     getRcTcGraphData(voltage: number, resistance: number, capacitance: number) {
-        this.graphData = {
-            dataX: [],
-            dataY: [],
-            dataYRange: 0,
-            dataXRange: 0,
-            dataXLabelBase: 1,
-            dataYLabelBase: 1,
-            xLabels: [],
-            yLabels: [],
-            dataXMin: 0,
-            dataYMin: 0,
-            dataPoints: [],
-            dataLines: [],
-        };
+        this.graphData = new GraphData()
         for (let index = 0; index < 51; index++) {
             this.graphData.dataX[index] = index * resistance * capacitance / 10
             this.graphData.dataY[index] = voltage * (1 - Math.exp(-1 * this.graphData.dataX[index] / (resistance * capacitance)))
