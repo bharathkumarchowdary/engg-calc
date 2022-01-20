@@ -45,6 +45,16 @@ export class RcTcComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.rctcGraphService.getRcTcGraphData(this.voltage.value, this.resistance.value, this.capacitance.value).subscribe(data => this.graphData = data)
+        this.rctcGraphService.getRcTcGraphData(this.voltage.value, this.resistance.value, this.capacitance.value)
+            .subscribe(data => this.graphData = data)
+        this.voltage.valueChanges.subscribe(changedValue =>
+            this.rctcGraphService.getRcTcGraphData(changedValue, this.resistance.value, this.capacitance.value)
+                .subscribe(data => this.graphData = data))
+        this.resistance.valueChanges.subscribe(changedValue =>
+            this.rctcGraphService.getRcTcGraphData(this.voltage.value, changedValue, this.capacitance.value)
+                .subscribe(data => this.graphData = data))
+        this.capacitance.valueChanges.subscribe(changedValue =>
+            this.rctcGraphService.getRcTcGraphData(this.voltage.value, this.resistance.value, changedValue)
+                .subscribe(data => this.graphData = data))
     }
 }
