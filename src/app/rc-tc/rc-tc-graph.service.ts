@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {GraphData} from './rc-tc.component'
 import {of} from "rxjs";
+import {GraphData} from "./graph.data";
 
 
 @Injectable({
@@ -24,11 +24,13 @@ export class RcTcGraphService {
         if ((1e-3 < this.graphData.dataXLabelBase) && (this.graphData.dataXRange < 1)) {
             this.graphData.dataXLabelBase = 1e-3
         }
-        for (let index = 0; index < 11; index += 1) {
-            this.graphData.xLabels[index] = Number(((((index * 10) / 100) * this.graphData.dataXRange) / this.graphData.dataXLabelBase).toFixed(3))
+        this.graphData.xLabels.splice(0, this.graphData.xLabels.length)
+        for (let index = 1; index <= 10; index += 1) {
+            this.graphData.xLabels.push(Number(((((index * 10) / 100) * this.graphData.dataXRange) / this.graphData.dataXLabelBase).toFixed(2)))
         }
-        for (let index = 0; index < 11; index += 1) {
-            this.graphData.yLabels[index] = Number(((((index * 10) / 100) * this.graphData.dataYRange) / this.graphData.dataYLabelBase).toFixed(3))
+        this.graphData.yLabels.splice(0, this.graphData.yLabels.length)
+        for (let index = 1; index <= 10; index += 1) {
+            this.graphData.yLabels.push(Number(((((index * 10) / 100) * this.graphData.dataYRange) / this.graphData.dataYLabelBase).toFixed(2)))
         }
         for (let index = 0; index < this.graphData.dataY.length; index++) {
             this.graphData.dataPoints[index] = {

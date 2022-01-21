@@ -9,10 +9,11 @@
               [attr.y2]="dataLine.y2"></line>
     </svg>
     <div class="y-axis">
-        <span *ngFor="let yLabel of graphData.yLabels" class="x-axis-label">{{yLabel}}</span>
+        <span *ngFor="let yLabel of graphData.yLabels" class="y-axis-label">{{yLabel}}</span>
     </div>
 </div>
 <div class="x-axis">
     <span *ngFor="let xLabel of graphData.xLabels" class="x-axis-label">{{xLabel}}</span>
+    <span class="y-axis-dummy"></span>
 </div>
 <label>milli second</label>

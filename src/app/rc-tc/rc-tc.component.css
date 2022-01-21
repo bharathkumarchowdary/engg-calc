@@ -4,7 +4,7 @@ line {
 }
 
 div.graph {
-    border: 3px solid red;
+    /*border: 3px solid red;*/
     height: 50%;
     min-height: 300px;
     width: 50%;
@@ -12,18 +12,21 @@ div.graph {
     display: flex;
 }
 svg{
-    border: 2px solid yellow;
+    border-bottom: 1px solid green;
+    border-right: 1px solid red;
     flex-grow: 1;
 }
 
 div.y-axis {
-    border: 2px solid blue;
     display: flex;
     flex-direction: column-reverse;
+    width: 30px;
+}
+span.y-axis-dummy{
+    width: 30px; /*Same as div.y-axis*/
 }
 
 div.x-axis {
-    border: 3px solid red;
     width: 50%;
     min-width: 500px;
     display: flex;
@@ -32,5 +35,14 @@ div.x-axis {
 span.x-axis-label {
     flex-grow: 1;
     text-align: center;
-    border: 1px solid green;
+}
+
+span.y-axis-label{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    flex-grow: 1;
+    /*border: 1px solid green;*/
+    align-items: center;
+    display: inline-flex;
 }
