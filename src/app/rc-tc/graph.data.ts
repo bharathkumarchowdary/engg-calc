@@ -1,4 +1,4 @@
- type DataPoint = {
+type DataPoint = {
     yDist: string;
     xDist: string;
 }
