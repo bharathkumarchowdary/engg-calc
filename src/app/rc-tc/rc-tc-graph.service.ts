@@ -3,6 +3,25 @@ import {of} from "rxjs";
 import {GraphData} from "./graph.data";
 
 
+export class RcTcFormData {
+    voltage: number = 0;
+    resistance: number = 0;
+    capacitance: number = 0;
+    voltagePrefix: number = 0
+    resistancePrefix: number;
+    capacitancePrefix: number;
+
+    constructor(voltage: number, resistance: number, capacitance: number,
+                voltagePrefix: number, resistancePrefix: number, capacitancePrefix: number) {
+        this.voltage = voltage;
+        this.resistance = resistance;
+        this.capacitance = capacitance;
+        this.voltagePrefix = voltagePrefix;
+        this.resistancePrefix = resistancePrefix;
+        this.capacitancePrefix = capacitancePrefix;
+    }
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -13,16 +32,31 @@ export class RcTcGraphService {
     constructor() {
     }
 
-    getRcTcGraphData(voltage: number, resistance: number, capacitance: number) {
+    getRcTcGraphData(rcTcFormData: RcTcFormData) {
         this.graphData = new GraphData()
         for (let index = 0; index < 51; index++) {
-            this.graphData.dataX[index] = index * resistance * capacitance / 10
-            this.graphData.dataY[index] = voltage * (1 - Math.exp(-1 * this.graphData.dataX[index] / (resistance * capacitance)))
+            this.graphData.dataX[index] = index * rcTcFormData.resistance * rcTcFormData.resistancePrefix * rcTcFormData.capacitance * rcTcFormData.capacitancePrefix / 10
+            this.graphData.dataY[index] = rcTcFormData.voltage * rcTcFormData.voltagePrefix * (1 - Math.exp(-1 * this.graphData.dataX[index] / (rcTcFormData.resistance * rcTcFormData.resistancePrefix * rcTcFormData.capacitance * rcTcFormData.capacitancePrefix)))
         }
         this.graphData.dataXRange = Math.max(...this.graphData.dataX) - Math.min(...this.graphData.dataX)
         this.graphData.dataYRange = Math.max(...this.graphData.dataY) - Math.min(...this.graphData.dataY)
-        if ((1e-3 < this.graphData.dataXLabelBase) && (this.graphData.dataXRange < 1)) {
+        if ((1e0 <= this.graphData.dataYRange) && (this.graphData.dataYRange < 1e3)) {
+            this.graphData.dataYLabelBase = 1
+        } else if ((1e-3 <= this.graphData.dataYRange) && (this.graphData.dataYRange < 1)) {
+            this.graphData.dataYLabelBase = 1e-3
+        } else if ((1e3 <= this.graphData.dataYRange) && (this.graphData.dataYRange < 1e6)) {
+            this.graphData.dataYLabelBase = 1e3
+        }
+        if ((1e-3 <= this.graphData.dataXRange) && (this.graphData.dataXRange < 1)) {
             this.graphData.dataXLabelBase = 1e-3
+        } else if ((1e-6 <= this.graphData.dataXRange) && (this.graphData.dataXRange < 1e-3)) {
+            this.graphData.dataXLabelBase = 1e-6
+        } else if ((1e-9 <= this.graphData.dataXRange) && (this.graphData.dataXRange < 1e-6)) {
+            this.graphData.dataXLabelBase = 1e-9
+        } else if ((1e-12 <= this.graphData.dataXRange) && (this.graphData.dataXRange < 1e-9)) {
+            this.graphData.dataXLabelBase = 1e-12
+        } else if ((1e-15 <= this.graphData.dataXRange) && (this.graphData.dataXRange < 1e-12)) {
+            this.graphData.dataXLabelBase = 1e-15
         }
         this.graphData.xLabels.splice(0, this.graphData.xLabels.length)
         for (let index = 1; index <= 10; index += 1) {
