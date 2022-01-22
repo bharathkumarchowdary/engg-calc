@@ -11,7 +11,8 @@ div.graph {
     min-width: 500px;
     display: flex;
 }
-svg{
+
+svg {
     border-bottom: 1px solid green;
     border-right: 1px solid red;
     flex-grow: 1;
@@ -22,8 +23,9 @@ div.y-axis {
     flex-direction: column-reverse;
     width: 30px;
 }
-span.y-axis-dummy{
-    width: 30px; /*Same as div.y-axis*/
+
+span.y-axis-dummy {
+    width: 70px; /*Same as div.y-axis*/
 }
 
 div.x-axis {
@@ -35,14 +37,46 @@ div.x-axis {
 span.x-axis-label {
     flex-grow: 1;
     text-align: center;
+    flex-basis: 0;
 }
 
-span.y-axis-label{
+span.y-axis-label {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     flex-grow: 1;
-    /*border: 1px solid green;*/
     align-items: center;
     display: inline-flex;
+}
+
+.form-field-main {
+    margin-right: 5px;
+    margin-left: 5px;
+    width: 100px;
+}
+
+.form-field-unit-prefix {
+    width: 75px;
+}
+
+div.x-axis-base {
+    text-align: center;
+    width: 50%;
+    min-width: 500px;
+    margin-top: 10px;
+}
+
+div.y-axis-base {
+    width: 40px;
+    display: flex;
+    align-items: center;
+}
+
+div.y-axis-base > p {
+    align-items: center;
+    transform: rotate(-90deg) translateY(-50%);
+    margin: 0 0 0 0;
+    white-space: nowrap;
+    /*height: fit-content;*/
+    /*width: fit-content;*/
 }
